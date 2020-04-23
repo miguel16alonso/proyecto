@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+<title></title>
+
+<!-- Bootstrap -->
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" 
+	th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+<link href="../../static/css/style.css" th:href="@{/css/style.css}"
+	rel="stylesheet" />
+
+</head>
+<style>
+body {
+	margin-top: 20px;
+}
+</style>
+<body>
+
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed"
+					data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+					aria-controls="navbar">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="/">Inotrs</a>
+			</div>
+			<div id="navbar" class="navbar-collapse collapse">
+				<ul class="nav navbar-nav navbar-right">
+					<li class="dropdown"><a href="#" class="dropdown-toggle"
+						data-toggle="dropdown" role="button" aria-haspopup="true"
+						aria-expanded="false">Opciones <span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="/admin/categoria/"
+								th:href="@{/admin/categoria/}">Gestión de categorías</a></li>
+							<li><a href="/admin/producto/" th:href="@{/admin/producto/}">Gestión
+									de productos</a></li>
+							<li><a href="/admin/edificio/" th:href="@{/admin/edificio/}">Gestión
+									de edificios</a></li>
+						</ul></li>
+				</ul>
+
+			</div>
+
+		</div>
+	</nav>
+
+<body id="page-top">
+	
+	
+	<th:block id="contenido">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-offset-2 col-md-8">
+				<div class="alert alert-warning alert-dismissible" role="alert"
+					th:if="${param.error}">
+					<button type="button" class="close" data-dismiss="alert"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<span>No se puede borrar un edificio que tiene asociados
+						productos</span>
+				</div>
+				<div class="pull-right">
+					<a href="form-edificio.html" th:href="@{/admin/edificio/nueva/}"
+						class="btn btn-primary">Nuevo edificio</a>
+
+				</div>
+				<table class="table">
+					<thead>
+						<tr>
+							<th>Nombre</th>
+							<th>Ubicacion</th>
+							<th>Operaciones</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="edificio : ${edificios}">
+							<td th:text="${edificio.nombre}"></td>
+							<td th:text="${edificio.ubicacion}"></td>
+							<td class="operaciones"><a href="#"
+								th:href="@{/admin/edificio/editar/{id}(id=${edificio.id})}"
+								class="btn btn-primary">Editar</a>
+								<button type="button" class="btn btn-danger" data-toggle="modal"
+									data-target="#delete-modal" th:data-id="${edificio.id}">Borrar</button></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+				<div class="pull-left">
+					<a data-toggle="modal"  data-target="#retroceder-modal"
+					class="btn btn-primary">Retroceder</a>
+				</div>
+		</div>
+	</div>
+	
+	
+
+
+	<div class="modal fade" id="delete-modal" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title">Borrar edificio</h4>
+				</div>
+				<div class="modal-body">
+					<p>¿Está usted seguro de borrar este edificio?</p>
+					<button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+					<a href="/admin/edificio/borrar/" class="btn btn-danger">Sí</a>
+				</div>
+			</div>
+
+		</div>
+	</div>
+	
+	
+	<div class="row">
+
+				<div th:if="${edificios.totalPages != 1}"
+					class="form-group col-md-11 pagination-centered">
+
+					<ul class="pagination">
+
+						<!-- Si el nÃºmero de pÃ¡gina es cero, deshabilitamos el enlace -->
+
+						<li th:class="${edificios.number == 0} ? disabled">
+							<!-- Este enlace nos debe llevar a la primera pÃ¡gina --> <a
+							class="pageLink" th:href="@{/admin/edificio/(page=1)}">&laquo;</a>
+
+						</li>
+
+						<!-- Si el nÃºmero de pÃ¡gina es cero, deshabilitamos el enlace -->
+
+						<li th:class="${edificios.number == 0} ? disabled">
+							<!-- Este enlace nos debe llevar a la pÃ¡gina anterior --> <a
+							class="pageLink"
+							th:href="@{/admin/edificio/(page=${edificios.number})}">&larr;</a>
+
+						</li>
+
+						<!-- Este bucle genera los enlaces para las demÃ¡s pÃ¡ginas -->
+
+						<li
+							th:class="${edificios.number == (page-1)} ? 'active pointer-disabled'"
+							th:each="page : ${#numbers.sequence(1, edificios.totalPages)}">
+
+							<a class="pageLink" th:href="@{/admin/edificio/(page=${page})}"
+							th:text="${page}"></a>
+
+						</li>
+
+						<!-- Enlace a la siguiente pÃ¡gina; si estamos en la Ãºltima queda desabilitado  -->
+
+						<li
+							th:class="${edificios.number == (edificios.totalPages - 1)} ? disabled">
+
+							<a class="pageLink"
+							th:href="@{/admin/edificio/(page=${edificios.number + 2})}">&rarr;</a>
+
+						</li>
+
+						<!-- Enlace a la Ãºltima pÃ¡gina; si estamos en la Ãºltima queda desabilitado  -->
+
+						<li
+							th:class="${edificios.number == (edificios.totalPages - 1)} ? disabled">
+
+							<a class="pageLink"
+							th:href="@{/admin/edificio/(page=${edificios.totalPages})}">&raquo;</a>
+
+						</li>
+
+					</ul>
+
+				</div>
+
+			</div>
+	
+	</th:block>
+	
+	<div class="modal fade" id="retroceder-modal" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title">Página principal</h4>
+				</div>
+				<div class="modal-body">
+					<p>¿Está usted seguro de volver a la página principal?</p>
+					<button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+					<a  href="/" class="btn btn-danger">Sí</a>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+		th:src="@{/webjars/jquery/jquery.min.js}"></script>
+	<!-- Include all compiled plugins (below), or include individual files as needed -->
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+		th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+
+	<script src="../../static/js/app.js" th:src="@{/js/app.js}"></script>
+
+
+
+</body>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+<title></title>
+
+<!-- Bootstrap -->
+<link
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+	th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+<link href="../../static/css/style.css" th:href="@{/css/style.css}"
+	rel="stylesheet" />
+
+<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed"
+					data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+					aria-controls="navbar">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="/">Inotrs</a>
+			</div>
+			<div id="navbar" class="navbar-collapse collapse">
+				<ul class="nav navbar-nav navbar-right">
+					<li class="dropdown"><a href="#" class="dropdown-toggle"
+						data-toggle="dropdown" role="button" aria-haspopup="true"
+						aria-expanded="false">Opciones <span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="/admin/categoria/"
+								th:href="@{/admin/categoria/}">Gestión de categorías</a></li>
+							<li><a href="/admin/producto/" th:href="@{/admin/producto/}">Gestión
+									de productos</a></li>
+							<li><a href="/admin/edificio/" th:href="@{/admin/edificio/}">Gestión
+									de edificios</a></li>
+						</ul></li>
+				</ul>
+			</div>
+
+		</div>
+	</nav>
+
+	<div class="container">
+		<div class="row">
+			<div class="col-md-offset-2 col-md-8">
+				<form method="post" action="#"
+					th:action="@{/admin/producto/nuevo/submit}" th:object="${producto}">
+					<h1>
+						<span th:text="${producto.id} ? 'Editar' : 'Nuevo'"></span>
+						producto
+					</h1>
+					<div class="form-group" 
+					th:classappend="${#fields.hasErrors('id')} ? 'has-error'">
+						<label for="id">Id</label> <input type="text"
+							class="form-control" id="id" placeholder="id"
+							th:field="*{id}" /><span
+							th:if="${#fields.hasErrors('id')}" th:errors="*{id}"
+							class="help-block" id="id-error">Errores</span>
+					</div>
+					<div class="form-group" 
+					th:classappend="${#fields.hasErrors('marca')} ? 'has-error'">
+						<label for="marca">Marca</label> <input type="text"
+							class="form-control" id="marca" placeholder="Marca"
+							th:field="*{marca}" /><span
+							th:if="${#fields.hasErrors('marca')}" th:errors="*{marca}"
+							class="help-block" id="marca-error">Errores</span>
+					</div>
+					<div class="form-group"
+					th:classappend="${#fields.hasErrors('modelo')} ? 'has-error'">
+						<label for="modelo">Modelo</label> <input type="text"
+							class="form-control" id="modelo" placeholder="Modelo"
+							th:field="*{modelo}" /><span
+							th:if="${#fields.hasErrors('modelo')}" th:errors="*{modelo}"
+							class="help-block" id="modelo-error">Errores</span>
+					</div>
+				<div class="form-group"
+				th:classappend="${#fields.hasErrors('stock')} ? 'has-error'">
+					<label for="stock">STOCK</label> <input type="number" disabled="disabled"
+					class="form-control" id="stock" th:field="*{stock}" /> 
+					<span th:if="${#fields.hasErrors('stock')}" th:errors="*{stock}"
+							class="help-block" id="stock-error">Errores</span>
+				</div>
+				<div class="form-group">
+					<label for="cantidad">Cantidad</label> <input type="number"
+					min="0" class="form-control" id="cantidad"
+					 th:field="*{cantidad}" />
+				</div>
+					<div class="form-group" 
+					th:classappend="${#fields.hasErrors('categoria')} ? 'has-error'">
+						<label for="categoria">Categoría</label> <select
+							th:field="*{categoria}" class="form-control">
+							<option value="-1">---</option>
+							<option th:each="categoria : ${categorias}"
+								th:value="${categoria.id}" th:text="${categoria.nombre}">Categoría</option>
+						</select>
+						<span
+							th:if="${#fields.hasErrors('categoria')}" th:errors="*{categoria}"
+							class="help-block" id="categoria-error">Errores</span>
+					</div>
+					<div class="form-group"
+					th:classappend="${#fields.hasErrors('edificio')} ? 'has-error'">
+							<label for="edificio">Edificio</label> <select
+							th:field="*{edificio}" class="form-control">
+							<option value="-1">---</option>
+							<option th:each="edificio : ${edificios}"
+								th:value="${edificio.id}" th:text="${edificio.nombre}">Edificios</option>
+						</select>
+						<span
+							th:if="${#fields.hasErrors('edificio')}" th:errors="*{edificio}"
+							class="help-block" id="edificio-error">Errores</span>
+					</div>
+					<button type="submit" class="btn btn-default">Enviar</button>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+		th:src="@{/webjars/jquery/jquery.min.js}"></script>
+	<!-- Include all compiled plugins (below), or include individual files as needed -->
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+		th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+
+
+</body>
+</html>

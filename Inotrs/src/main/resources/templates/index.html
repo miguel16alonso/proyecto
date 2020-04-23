@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+		xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+<title></title>
+
+  <title>INOTRS</title>
+
+  <!-- Custom fonts for this theme -->
+  <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+
+  <!-- Theme CSS -->
+  <link href="css/freelancer.min.css" rel="stylesheet">
+
+</head>
+
+<body id="page-top">
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top" id="mainNav">
+    <div class="container">
+   	 <img style="width:4%; height:4%; margin-right:2%;"  src="img/Logo_Blanco.svg" alt="">
+      <a class="navbar-brand js-scroll-trigger" href="#page-top">INOTRS</a>
+      <button class="navbar-toggler navbar-toggler-right text-uppercase font-weight-bold bg-primary text-white rounded" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        Menu
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+        					<!-- Login aquí -->
+					<li class="dropdown"><th:block
+							sec:authorize="!isAuthenticated()">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown"
+								role="button">Login<span class="caret"></span>
+							</a>
+							<div class="dropdown-menu" id="formLogin">
+								<div class="row">
+									<div class="container-fluid">
+										<form method="POST" th:action="@{/login}">
+											<div class="form-group">
+												<label class="">Username</label> <input class="form-control"
+													name="username" id="username" type="text">
+											</div>
+											<div class="form-group">
+												<label class="">Password</label> <input class="form-control"
+													name="password" id="password" type="password"> <br
+													class="">
+											</div>
+											<button type="submit" id="btnLogin"
+												class="btn btn-success btn-sm">Login</button>
+										</form>
+									</div>
+								</div>
+							</div>
+						</th:block> 
+						<th:block sec:authorize="isAuthenticated()">
+
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown"
+								role="button"> <span class="glyphicon glyphicon-user"
+								aria-hidden="true"></span> <span
+								th:text="${#authentication.name}" style="padding: 0 5px;">Nombre</span>
+								<span class="caret"></span>
+							</a>
+          		<ul class="dropdown-menu">          			
+          			<li>
+          				<a href="javascript:document.getElementById('logoutForm').submit()">Salir</a>
+          			</li>          			
+          		</ul>
+						</th:block></li>
+          <li class="nav-item mx-0 mx-lg-1" sec:authorize="hasRole('ROLE_ADMIN')">
+            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#inventario">Inventario</a>
+          </li>
+          <li class="nav-item mx-0 mx-lg-1" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_USER')">
+            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#incidencia">Incidencias</a>
+          </li>
+          <li class="nav-item mx-0 mx-lg-1">
+            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#about">Acerca de</a>
+          </li>
+          </ul>
+      </div>
+    </div>
+  </nav>
+  
+  	<form th:action="@{/logout}" method="POST" id="logoutForm">
+    </form>
+
+  <!-- Masthead -->
+  <header class="masthead bg-primary text-white text-center">
+    <div class="container d-flex align-items-center flex-column">
+
+      <!-- Masthead Avatar Image -->
+      <img style="width:40%; height:40%; " class="masthead-avatar mb-5" src="img/LogoyNombre_Negro.svg" alt="">
+
+      <!-- Masthead Heading 
+      <h1 class="masthead-heading text-uppercase mb-0">Bienvenido  INOTRS</h1>-->
+
+      <!-- Masthead Subheading -->
+      <p class="masthead-subheading font-weight-light mb-0">Gestión Inventario - Gestión Incidencias</p>
+
+    </div>
+  </header>
+  
+  <th:block sec:authorize="hasRole('ROLE_ADMIN')">
+    <!-- Portfolio Section -->
+  <section class="page-section portfolio" id="inventario">
+    <div class="container">
+
+      <!-- Portfolio Section Heading -->
+      <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Inventario</h2>
+
+      <!-- Icon Divider -->
+      <div class="divider-custom divider">
+          <img style="width:5%; height:5%; "  src="img/Logo_Negro.svg" alt="">
+      </div>
+
+      <!-- Portfolio Grid Items -->
+      <div class="row">
+
+        <!-- Portfolio Item 1 -->
+        <div class="col-md-6 col-lg-4">
+         <div class="portfolio-item mx-auto">
+        
+         <a href="admin/list-categoria.html"th:href="@{/admin/categoria/}"/> 
+         
+	<div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
+              <div class="portfolio-item-caption-content text-center text-white">
+                <i class="fas fa-plus fa-3x"></i>
+              </div>
+            </div>
+            <img class="img-fluid" src="img/portfolio/categoria.png" alt="">
+          </div>
+        </div>
+
+        <!-- Portfolio Item 2 -->
+        <div class="col-md-6 col-lg-4">
+          <div class="portfolio-item mx-auto">
+          <a href="admin/list-producto.html"	th:href="@{/admin/producto/}">
+            <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
+              <div class="portfolio-item-caption-content text-center text-white">
+                <i class="fas fa-plus fa-3x"></i>
+              </div>
+            </div></a>
+            <img class="img-fluid" src="img/portfolio/producto.png" alt="">
+          </div>
+        </div>
+        
+
+        <!-- Portfolio Item 3 -->
+        <div class="col-md-6 col-lg-4">
+          <div class="portfolio-item mx-auto">
+          <a href="admin/list-edificio.html"	th:href="@{/admin/edificio/}">
+            <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
+              <div class="portfolio-item-caption-content text-center text-white">
+                <i class="fas fa-plus fa-3x"></i>
+              </div>
+            </div></a>
+            <img class="img-fluid" src="img/portfolio/edificio.png" alt="">
+          </div>
+        </div>
+        
+         <!-- Portfolio Item 3 -->
+        <div class="col-md-6 col-lg-4">
+          <div class="portfolio-item mx-auto">
+          <a href="admin/list-usuario.html"	th:href="@{/admin/usuario/}">
+            <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
+              <div class="portfolio-item-caption-content text-center text-white">
+                <i class="fas fa-plus fa-3x"></i>
+              </div>
+            </div></a>
+            <img class="img-fluid" src="img/portfolio/usuario.png" alt="">
+          </div>
+        </div>
+        
+         <!-- Portfolio Item 3 th:href="@{/admin/edificio/tecnicoEdificio/}">-->
+        <div class="col-md-6 col-lg-4">
+          <div class="portfolio-item mx-auto">
+          <a href="admin/list-edificio_tecnico.html" th:href="@{/admin/edificio/tecnicoEdificio/}">
+            <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
+              <div class="portfolio-item-caption-content text-center text-white">
+                <i class="fas fa-plus fa-3x"></i>
+              </div>
+            </div></a>
+            <img class="img-fluid" src="img/portfolio/busquedasTecnicosEdificio.png" alt="">
+          </div>
+        </div>
+        
+        
+         <!-- Portfolio Item 3 -->
+        <div class="col-md-6 col-lg-4">
+          <div class="portfolio-item mx-auto">
+            <a href="admin/list-tecnico.html"	th:href="@{/admin/tecnico/}">
+            <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
+              <div class="portfolio-item-caption-content text-center text-white">
+                <i class="fas fa-plus fa-3x"></i>
+              </div>
+            </div></a>
+            <img class="img-fluid" src="img/portfolio/tecnico.png" alt="">
+          </div>
+        </div>
+        
+      <!-- /.row -->
+
+    </div>
+  </section>
+  </th:block>
+  <th:block sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_USER')">
+  <!-- Contact Section -->
+   <section class="page-section portfolio" id="incidencia">
+        <div class="container">
+
+      <!-- Portfolio Section Heading -->
+      <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">INCIDENCIAS</h2>
+
+      <!-- Icon Divider -->
+      <div class="divider-custom divider">
+          <img style="width:5%; height:5%; "  src="img/Logo_Negro.svg" alt="">
+      </div>
+
+      <!-- Portfolio Grid Items -->
+     
+     
+      <div class="row">
+
+         <!-- Portfolio Item 3 -->
+        <div class="col-md-6 col-lg-4">
+          <div class="portfolio-item mx-auto">
+          <span sec:authorize="hasRole('ROLE_ADMIN')">
+            <a href="admin/list-incidencia.html"	th:href="@{/admin/incidencia/}">
+           </span>
+          <span sec:authorize="hasRole('ROLE_USER')">
+           <a href="user/incidencia-list.html" th:href="@{/user/incidencia/incidenciaUsuario/{id}(id=${#authentication.name})}"/>
+           </span>
+            <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
+              <div class="portfolio-item-caption-content text-center text-white">
+                <i class="fas fa-plus fa-3x"></i>
+              </div>
+            </div></a>
+            <img class="img-fluid" src="img/portfolio/incidencia.png" alt="">
+          </div>
+        </div>
+        
+          <th:block sec:authorize="hasRole('ROLE_USER')">
+         <!-- Portfolio Item 3 -->
+        <div class="col-md-6 col-lg-4">
+          <div class="portfolio-item mx-auto">
+			<a href="user/usuario-one.html" th:href="@{/user/incidencia/inventarioUsuario/{id}(id=${#authentication.name})}"/>
+            <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
+              <div class="portfolio-item-caption-content text-center text-white">
+                <i class="fas fa-plus fa-3x"></i>
+              </div>
+            </div></a>
+            <img class="img-fluid" src="img/portfolio/inventario.png" alt="">
+          </div>
+        </div>
+        </th:block>
+      <!-- /.row -->
+
+    </div>
+  </section>
+</th:block> 
+  <!-- About Section -->
+  <section class="page-section bg-primary text-white mb-0" id="about">
+    <div class="container">
+
+      <!-- About Section Heading -->
+      <h2 class="page-section-heading text-center text-uppercase text-white">Acerca de</h2>
+
+      <!-- Icon Divider -->
+      <div class="divider-custom divider">
+          <img style="width:5%; height:5%; "  src="img/Logo_Blanco.svg" alt="">
+      </div>
+
+      <!-- About Section Content -->
+      <div class="row">
+        <div class="col-lg-4 ml-auto">
+          <p class="lead">Software de gestión de inventarios dirigido específicamente a pequeñas empresas. Su sistema de gestión de inventarios dar de alta, editar y borrar productos</p>
+        </div>
+        <div class="col-lg-4 mr-auto">
+          <p class="lead">Su control en el detalle del tickets, para poder ayudar a los usuarios a solucionar sus problemas informáticos</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+    <!-- Copyright Section -->
+  <footer class="copyright py-4 text-center text-white">
+    <div class="container">
+      <small>Copyright &copy; Your Website 2020</small>
+    </div>
+  </footer>
+
+
+
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Plugin JavaScript -->
+  <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+  <!-- Contact Form JavaScript -->
+  <script src="js/jqBootstrapValidation.js"></script>
+  <script src="js/contact_me.js"></script>
+
+  <!-- Custom scripts for this template -->
+  <script src="js/freelancer.min.js"></script>
+  
+	
+	
+
+</body>
+
+</html>

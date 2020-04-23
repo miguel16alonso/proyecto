@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+<title></title>
+
+<!-- Bootstrap -->
+<link
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+	th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+<link href="../../static/css/style.css" th:href="@{/css/style.css}"
+	rel="stylesheet" />
+	
+<link th:rel="stylesheet" th:href="@{assets/bootstrap-datepicker/css/bootstrap-datepicker.css}"/>
+<link th:rel="stylesheet" th:href="@{assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.css}"/>
+<link th:rel="stylesheet" th:href="@{webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
+<link th:rel="stylesheet" th:href="@{webjars/font-awesome/5.11.2/css/all.css} "/>
+
+<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+
+	<div class="container">
+		<div class="row">
+			<div class="col-md-offset-2 col-md-8">
+				<form method="post" action="#"
+					th:action="@{/admin/incidencia/nueva/submit}"
+					th:object="${incidencia}">
+				<input type="hidden" th:field="*{id}" id="id" />
+				
+				<!--<div class="form-group">
+					<label for="id">Id</label> <input type="text"
+					class="form-control" id="id" th:field="*{id}" /> 
+				</div>-->
+				
+				<div class="form-group">
+					<label for="descripcion">Descripcion</label> <input type="text"
+					class="form-control" id="descripcion" placeholder="descripicon"
+					required="required" th:field="*{descripcion}">
+				</div>
+				<input type="hidden" th:field="*{fecha_Inicio}" id="fecha_Inicio" />
+				
+				<label for="fecha_Fin">Fecha resolucion</label>
+				<div class="input-group date">
+                    <input type="text" class="form-control" id="fecha_Fin" autocomplete="off" th:field="*{fecha_Fin}"/>
+                    <div class="input-group-append">
+                        <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                    </div>
+                </div>
+                	
+				<div class="form-group">
+						<label class="control-label" for="prioridad">Prioridad</label>
+						<select th:field="*{prioridad}" class="form-control">
+							<option th:each="prioridad : ${T(com.inotrs.proyecto.modelo.Prioridad).values()}"
+							 th:value="${prioridad}" th:text="${prioridad}">Prioridad</option>
+						</select>
+				</div>
+				<div class="form-group">
+						<label class="control-label" for="estado">Estado</label>
+						<select th:field="*{estado}" class="form-control">
+							<option th:each="estado : ${T(com.inotrs.proyecto.modelo.Estado).values()}"
+							 th:value="${estado}" th:text="${estado}">Estado</option>
+						</select>
+				</div>
+				<div class="form-group">
+						<label class="control-label" for="tipo">Tipo Incidencia</label>
+						<select th:field="*{tipo}" class="form-control">
+							<option th:each="tipo : ${T(com.inotrs.proyecto.modelo.Tipo).values()}"
+							 th:value="${tipo}" th:text="${tipo}">Tipo Incidencia</option>
+						</select>
+				</div>
+				<div class="form-group">
+							<label for="usuario">Usuario</label> <select
+							th:field="*{usuario}" class="form-control">
+							<option value="-1">---</option>
+							<option th:each="usuario : ${usuarios}"
+								th:value="${usuario.login}" th:text="${usuario.login}">Usuario</option>
+						</select>
+					</div>
+					<button type="submit" class="btn btn-default">Enviar</button>
+				</form>
+			</div>
+		</div>
+	</div>
+
+
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+		th:src="@{/webjars/jquery/jquery.min.js}"></script>
+	<!-- Include all compiled plugins (below), or include individual files as needed -->
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+		th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+		
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+<script th:src="@{assets/bootstrap-datepicker/js/bootstrap-datepicker.js}"></script>
+
+
+</body>
+</html>
