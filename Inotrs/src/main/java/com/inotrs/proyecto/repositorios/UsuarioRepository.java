@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import com.inotrs.proyecto.modelo.Edificio;
+import com.inotrs.proyecto.modelo.Producto;
 import com.inotrs.proyecto.modelo.Usuario;
 
 public interface UsuarioRepository extends JpaRepository<Usuario, String>{
@@ -23,4 +24,6 @@ public interface UsuarioRepository extends JpaRepository<Usuario, String>{
 	
 	List<Usuario> findByNombreContainsIgnoreCaseOrApellidosContainsIgnoreCaseOrTelefonoContainsIgnoreCase(String nombre, String apellidos, String telefono);
 	
+	@Query("select count(p) from Usuario p where p.producto = ?1")
+	public int findNumUsuarioByProducto(Producto producto);
 }

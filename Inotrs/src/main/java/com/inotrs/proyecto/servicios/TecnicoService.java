@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.inotrs.proyecto.modelo.Edificio;
+import com.inotrs.proyecto.modelo.Producto;
 import com.inotrs.proyecto.modelo.Tecnico;
 import com.inotrs.proyecto.modelo.Usuario;
 import com.inotrs.proyecto.repositorios.TecnicoRepository;
@@ -59,6 +60,11 @@ public class TecnicoService implements ITecnicoService {
 	
 	public List<Tecnico> buscador(String cadena) {
 		 return tecnicoRepositorio.findByNombreContainsIgnoreCaseOrApellidosContainsIgnoreCaseOrTelefonoContainsIgnoreCase(cadena, cadena, cadena);
+	}
+
+	@Override
+	public int numeroTecnicoProducto(Producto producto) {
+		return tecnicoRepositorio.findNumTecnicoByProducto(producto);
 	}
 
 }

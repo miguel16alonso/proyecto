@@ -7,7 +7,6 @@
 <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 <title></title>
 
-
 <!-- Bootstrap -->
 <link
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -21,15 +20,8 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-<style>
-body {
-	margin-top: 20px;
-}
-</style>
-
 </head>
 <body>
-
 	<nav class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container-fluid">
 			<div class="navbar-header">
@@ -42,104 +34,73 @@ body {
 				</button>
 				<a class="navbar-brand" href="/">Inotrs</a>
 			</div>
-			<div id="navbar" class="navbar-collapse collapse">
+		</div>
+	</nav>
+
+	<div class="container">
+		<div class="row">
+			<div class="col-md-offset-2 col-md-8">
+				<form method="post" action="#"
+					th:action="@{/tecnico/usuario/nuevo/submit}" th:object="${usuario}">
+					<h1>
+						<span th:text="${usuario.login} ? 'Editar' : 'Nuevo'"></span>
+						usuario
+					</h1>
+				<div class="form-group">
+					<label for="login">Login</label> <input type="text"
+					class="form-control" id="login" th:field="*{login}" /> 
+				</div>
+					<div class="form-group">
+						<label for="nombre">Nombre</label> <input type="text"
+							class="form-control" id="nombre" placeholder="Nombre"
+							th:field="*{nombre}" />
+					</div>
+					<div class="form-group">
+						<label for="apellidos">Apellidos</label> <input type="text"
+							class="form-control" id="apellidos" placeholder="Apellidos"
+							th:field="*{apellidos}">
+					</div>
+					<div class="form-group">
+						<label for="telefono">Telefono</label> <input type="text"
+							class="form-control" id="telefono" placeholder="Telefono"
+							th:field="*{telefono}">
+					</div>
+					<div class="form-group">
+						<label for="despacho">Despacho</label> <input type="text"
+							class="form-control" id="despacho" placeholder="Despacho"
+							th:field="*{despacho}">
+					</div>
+					<div class="form-group">
+						<label for="puesto">Puesto</label> <input type="text"
+							class="form-control" id="puesto" placeholder="Puesto"
+							th:field="*{puesto}">
+					</div>
+					<div class="form-group">
+							<label for="edificio">Edificio</label> <select
+							th:field="*{edificio}" class="form-control">
+							<option value="-1">---</option>
+							<option th:each="edificio : ${edificios}"
+								th:value="${edificio.id}" th:text="${edificio.nombre}">Edificios</option>
+						</select>
+					</div>
+					<div class="form-group">
+							<label for="producto">Producto</label> <select
+							th:field="*{producto}" class="form-control">
+							<option value="-1">---</option>
+							<option th:each="producto : ${productos}"
+								th:value="${producto.id}" th:text="${producto.marca}+${producto.modelo}">Productos</option>
+						</select>
+					</div>
+					<button type="submit" class="btn btn-default">Enviar</button>
+				</form>
+			</div>
+		</div>
 				<div class="pull-right">
 					<a data-toggle="modal"  data-target="#retroceder-modal"
 					class="btn btn-primary">Retroceder</a>
 				</div>
-			</div>
-		</div>
-	</nav>
-</head>
-<body>
-	
-	
-	<th:block id="contenido">
-	<div class="container">
-		<div class="row">
-			<div class="col-md-offset-1 col-md-10">
-				<table class="table">
-					<thead>
-						<tr>
-							<th>Numero de ticket</th>
-							<th>Descripcion</th>
-							<th>Fecha Creacion</th>
-							<th>Fecha Cierre</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td th:text=${incidencia.id}></td>
-							<td th:text="${incidencia.descripcion}"></td>
-							<td th:text="${incidencia.fecha_Inicio}"></td>
-							<td th:text="${incidencia.fecha_Fin}"></td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-		</div>
 	</div>
 	
-		<div class="row">
-			<div class="col-md-1 col-xs-12">
-			</div>
-		<div class="col-md-4 col-xs-12">
-				<h2>Usuario</h2>
-	
-				<table class="table">
-					<thead>
-						<tr>
-							<th>Login</th>
-							<th>Nombre</th>
-							<th>Apellidos</th>
-							<th>Telefono</th>
-							<th>Despacho</th>
-							<th>Edificio</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td th:text="${incidencia.usuario.login}"></td>
-							<td th:text="${incidencia.usuario.nombre}"></td>
-							<td th:text="${incidencia.usuario.apellidos}"></td>
-							<td th:text="${incidencia.usuario.telefono}"></td>
-							<td th:text="${incidencia.usuario.despacho}"></td>
-							<td th:text="${incidencia.usuario.edificio.nombre}"></td>
-						</tr>
-					</tbody>
-				</table>
-		</div>
-			<div class="col-md-1 col-xs-12">
-			</div>
-		<div class="col-md-4 col-xs-12">
-			<h2>Tecnico</h2>
-				<table class="table">
-					<thead>
-						<tr>
-							<th>Login</th>
-							<th>Nombre</th>
-							<th>Apellidos</th>
-							<th>Telefono</th>
-							<th>Edificio</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td th:text="${incidencia.tecnico.login}"></td>
-							<td th:text="${incidencia.tecnico.nombre}"></td>
-							<td th:text="${incidencia.tecnico.apellidos}"></td>
-							<td th:text="${incidencia.tecnico.telefono}"></td>
-							<td th:text="${incidencia.tecnico.edificio.nombre}"></td>
-						</tr>
-					</tbody>
-				</table>
-		</div>
-	</div>
-	
-	</th:block>
-	
-
-				
 	<div class="modal fade" id="retroceder-modal" tabindex="-1" role="dialog">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
@@ -159,7 +120,7 @@ body {
 
 		</div>
 	</div>
-	
+
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"
 		th:src="@{/webjars/jquery/jquery.min.js}"></script>
@@ -168,6 +129,6 @@ body {
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
 		th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
 
-	<script src="../../static/js/app.js" th:src="@{/js/app.js}"></script>
 
 </body>
+</html>

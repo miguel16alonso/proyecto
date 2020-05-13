@@ -43,13 +43,24 @@ body {
 				<a class="navbar-brand" href="/">Inotrs</a>
 			</div>
 			<div id="navbar" class="navbar-collapse collapse">
-				<div class="pull-right">
-					<a data-toggle="modal"  data-target="#retroceder-modal"
-					class="btn btn-primary">Retroceder</a>
-				</div>
+				<ul class="nav navbar-nav navbar-right">
+					<li class="dropdown"><a href="#" class="dropdown-toggle"
+						data-toggle="dropdown" role="button" aria-haspopup="true"
+						aria-expanded="false">Opciones <span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="/admin/categoria/"
+								th:href="@{/admin/categoria/}">Gestión de categorías</a></li>
+							<li><a href="/admin/producto/" th:href="@{/admin/producto/}">Gestión
+									de productos</a></li>
+							<li><a href="/admin/edificio/" th:href="@{/admin/edificio/}">Gestión
+									de edificios</a></li>
+						</ul></li>
+				</ul>
 			</div>
+
 		</div>
 	</nav>
+
 </head>
 <body>
 	
@@ -137,28 +148,6 @@ body {
 	</div>
 	
 	</th:block>
-	
-
-				
-	<div class="modal fade" id="retroceder-modal" tabindex="-1" role="dialog">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-					<h4 class="modal-title">Página principal</h4>
-				</div>
-				<div class="modal-body">
-					<p>¿Está usted seguro de volver a la página principal?</p>
-					<button type="button" class="btn btn-default" data-dismiss="modal">No</button>
-					<a  href="/" class="btn btn-danger">Sí</a>
-				</div>
-			</div>
-
-		</div>
-	</div>
 	
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"

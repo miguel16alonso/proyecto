@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+<title></title>
+
+
+<!-- Bootstrap -->
+<link
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+	th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+<link href="../../static/css/style.css" th:href="@{/css/style.css}"
+	rel="stylesheet" />
+
+<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+<style>
+body {
+	margin-top: 20px;
+}
+</style>
+
+</head>
+<body>
+
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed"
+					data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+					aria-controls="navbar">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="/">Inotrs</a>
+			</div>
+			<div id="navbar" class="navbar-collapse collapse">
+				<ul class="nav navbar-nav navbar-right">
+					<li class="dropdown"><a href="#" class="dropdown-toggle"
+						data-toggle="dropdown" role="button" aria-haspopup="true"
+						aria-expanded="false">Opciones <span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="/tecnico/usuario/" th:href="@{/tecnico/usuario/}">Gestión
+									de Usuarios</a></li>
+							<li><a href="/tecnico/tecnico/" th:href="@{/tecnico/tecnico/}">Gestión
+									de Tecnicos</a></li>
+						</ul></li>
+				</ul>
+			</div>
+
+		</div>
+	</nav>
+
+</head>
+<body id="page-top">
+	
+	
+	<th:block id="contenido">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-offset-1 col-md-10">
+				<div class="pull-right">
+					<a href="form-producto.html" th:href="@{/tecnico/producto/nuevo/}" class="btn btn-primary">Nuevo
+						producto</a>
+
+				</div>
+
+				<table class="table">
+					<thead>
+						<tr>
+							<th>Id</th>
+							<th>Marca</th>
+							<th>Modelo</th>
+							<th>Operaciones</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="producto : ${productos}">
+							<td th:text="${producto.id}"></td>
+							<td th:text="${producto.marca}"></td>
+							<td th:text="${producto.modelo}"></td>
+							<td class="operaciones"><a href="#"
+								th:href="@{/tecnico/producto/editar/{id}(id=${producto.id})}"
+								class="btn btn-primary btn-sm">Editar</a>
+								<a href="#" th:href="@{/tecnico/producto/product/{id}(id=${producto.id})}"
+								class="btn btn-primary btn-sm">Ver</a></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		
+		<div class="row">
+
+				<div th:if="${productos.totalPages != 1}"
+					class="form-group col-md-11 pagination-centered">
+
+					<ul class="pagination">
+
+						<!-- Si el nÃºmero de pÃ¡gina es cero, deshabilitamos el enlace -->
+
+						<li th:class="${productos.number == 0} ? disabled">
+							<!-- Este enlace nos debe llevar a la primera pÃ¡gina --> <a
+							class="pageLink" th:href="@{/tecnico/producto/(page=1)}">&laquo;</a>
+
+						</li>
+
+						<!-- Si el nÃºmero de pÃ¡gina es cero, deshabilitamos el enlace -->
+
+						<li th:class="${productos.number == 0} ? disabled">
+							<!-- Este enlace nos debe llevar a la pÃ¡gina anterior --> <a
+							class="pageLink"
+							th:href="@{/tecnico/producto/(page=${productos.number})}">&larr;</a>
+
+						</li>
+
+						<!-- Este bucle genera los enlaces para las demÃ¡s pÃ¡ginas -->
+
+						<li
+							th:class="${productos.number == (page-1)} ? 'active pointer-disabled'"
+							th:each="page : ${#numbers.sequence(1, productos.totalPages)}">
+
+							<a class="pageLink" th:href="@{/tecnico/producto/(page=${page})}"
+							th:text="${page}"></a>
+
+						</li>
+
+						<!-- Enlace a la siguiente pÃ¡gina; si estamos en la Ãºltima queda desabilitado  -->
+
+						<li
+							th:class="${productos.number == (productos.totalPages - 1)} ? disabled">
+
+							<a class="pageLink"
+							th:href="@{/tecnico/producto/(page=${productos.number + 2})}">&rarr;</a>
+
+						</li>
+
+						<!-- Enlace a la Ãºltima pÃ¡gina; si estamos en la Ãºltima queda desabilitado  -->
+
+						<li
+							th:class="${productos.number == (productos.totalPages - 1)} ? disabled">
+
+							<a class="pageLink"
+							th:href="@{/tecnico/producto/(page=${productos.totalPages})}">&raquo;</a>
+
+						</li>
+
+					</ul>
+
+				</div>
+
+			</div>
+	</div>
+	
+	</th:block>
+	
+	
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+		th:src="@{/webjars/jquery/jquery.min.js}"></script>
+	<!-- Include all compiled plugins (below), or include individual files as needed -->
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+		th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+
+	<script src="../../static/js/app.js" th:src="@{/js/app.js}"></script>
+
+
+
+
+</body>

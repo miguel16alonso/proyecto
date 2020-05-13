@@ -166,6 +166,26 @@ body {
 	
 	</th:block>
 	
+	<div class="modal fade" id="delete-modal" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title">Borrar producto</h4>
+				</div>
+				<div class="modal-body">
+					<p>¿Está usted seguro de borrar este producto?</p>
+					<button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+					<a href="/admin/producto/borrar/" class="btn btn-danger">Sí</a>
+				</div>
+			</div>
+
+		</div>
+	</div>
+	
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"
 		th:src="@{/webjars/jquery/jquery.min.js}"></script>

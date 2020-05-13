@@ -75,13 +75,13 @@
           			</li>          			
           		</ul>
 						</th:block></li>
-          <li class="nav-item mx-0 mx-lg-1" sec:authorize="hasRole('ROLE_ADMIN')">
+          <li class="nav-item mx-0 mx-lg-1" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_TECNICO')">
             <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#inventario">Inventario</a>
           </li>
-          <li class="nav-item mx-0 mx-lg-1" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_USER')">
+          <li class="nav-item mx-0 mx-lg-1" sec:authorize="isAuthenticated()">
             <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#incidencia">Incidencias</a>
           </li>
-          <li class="nav-item mx-0 mx-lg-1">
+          <li class="nav-item mx-0 mx-lg-1" sec:authorize="isAuthenticated()">
             <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#about">Acerca de</a>
           </li>
           </ul>
@@ -108,7 +108,7 @@
     </div>
   </header>
   
-  <th:block sec:authorize="hasRole('ROLE_ADMIN')">
+  <th:block sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_TECNICO')">
     <!-- Portfolio Section -->
   <section class="page-section portfolio" id="inventario">
     <div class="container">
@@ -124,6 +124,8 @@
       <!-- Portfolio Grid Items -->
       <div class="row">
 
+       <th:block sec:authorize="hasRole('ROLE_ADMIN')">
+
         <!-- Portfolio Item 1 -->
         <div class="col-md-6 col-lg-4">
          <div class="portfolio-item mx-auto">
@@ -138,11 +140,16 @@
             <img class="img-fluid" src="img/portfolio/categoria.png" alt="">
           </div>
         </div>
-
+	</th:block>
         <!-- Portfolio Item 2 -->
         <div class="col-md-6 col-lg-4">
           <div class="portfolio-item mx-auto">
-          <a href="admin/list-producto.html"	th:href="@{/admin/producto/}">
+            <span sec:authorize="hasRole('ROLE_TECNICO')">
+            	<a href="tecnico/list-producto.html" th:href="@{/tecnico/producto/}">
+           </span>
+            <span sec:authorize="hasRole('ROLE_ADMIN')">
+  				<a href="admin/list-producto.html"	th:href="@{/admin/producto/}">
+  			</span>
             <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
               <div class="portfolio-item-caption-content text-center text-white">
                 <i class="fas fa-plus fa-3x"></i>
@@ -152,6 +159,7 @@
           </div>
         </div>
         
+       <th:block sec:authorize="hasRole('ROLE_ADMIN')">
 
         <!-- Portfolio Item 3 -->
         <div class="col-md-6 col-lg-4">
@@ -165,11 +173,17 @@
             <img class="img-fluid" src="img/portfolio/edificio.png" alt="">
           </div>
         </div>
+        </th:block>
         
          <!-- Portfolio Item 3 -->
         <div class="col-md-6 col-lg-4">
           <div class="portfolio-item mx-auto">
+           <span sec:authorize="hasRole('ROLE_TECNICO')">
+            	<a href="tecnico/list-usuario.html" th:href="@{/tecnico/usuario/}">
+           </span>
+           <span sec:authorize="hasRole('ROLE_ADMIN')">
           <a href="admin/list-usuario.html"	th:href="@{/admin/usuario/}">
+          </span>
             <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
               <div class="portfolio-item-caption-content text-center text-white">
                 <i class="fas fa-plus fa-3x"></i>
@@ -178,6 +192,8 @@
             <img class="img-fluid" src="img/portfolio/usuario.png" alt="">
           </div>
         </div>
+        
+        <th:block sec:authorize="hasRole('ROLE_ADMIN')">
         
          <!-- Portfolio Item 3 th:href="@{/admin/edificio/tecnicoEdificio/}">-->
         <div class="col-md-6 col-lg-4">
@@ -188,15 +204,21 @@
                 <i class="fas fa-plus fa-3x"></i>
               </div>
             </div></a>
-            <img class="img-fluid" src="img/portfolio/busquedasTecnicosEdificio.png" alt="">
+            <img class="img-fluid" src="img/portfolio/bte.png" alt="">
           </div>
         </div>
         
+        </th:block>
         
          <!-- Portfolio Item 3 -->
         <div class="col-md-6 col-lg-4">
           <div class="portfolio-item mx-auto">
+            <span sec:authorize="hasRole('ROLE_TECNICO')">
+            	<a href="tecnico/list-tecnico.html" th:href="@{/tecnico/tecnico/}">
+           </span>
+           <span sec:authorize="hasRole('ROLE_ADMIN')">
             <a href="admin/list-tecnico.html"	th:href="@{/admin/tecnico/}">
+            </span>
             <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
               <div class="portfolio-item-caption-content text-center text-white">
                 <i class="fas fa-plus fa-3x"></i>
@@ -211,7 +233,7 @@
     </div>
   </section>
   </th:block>
-  <th:block sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_USER')">
+  <th:block sec:authorize="isAuthenticated()">
   <!-- Contact Section -->
    <section class="page-section portfolio" id="incidencia">
         <div class="container">
@@ -238,20 +260,33 @@
           <span sec:authorize="hasRole('ROLE_USER')">
            <a href="user/incidencia-list.html" th:href="@{/user/incidencia/incidenciaUsuario/{id}(id=${#authentication.name})}"/>
            </span>
+           <span sec:authorize="hasRole('ROLE_TECNICO')">
+            <a href="tecnico/list-incidencia.html"	th:href="@{/tecnico/incidencia/}">
+           </span>
             <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
               <div class="portfolio-item-caption-content text-center text-white">
                 <i class="fas fa-plus fa-3x"></i>
               </div>
             </div></a>
+            <span sec:authorize="hasAnyRole('ROLE_TECNICO','ROLE_ADMIN')">
             <img class="img-fluid" src="img/portfolio/incidencia.png" alt="">
+            </span>
+             <span sec:authorize="hasRole('ROLE_USER')">
+            <img class="img-fluid" src="img/portfolio/incidenciaU.png" alt="">
+            </span>
           </div>
         </div>
         
-          <th:block sec:authorize="hasRole('ROLE_USER')">
+          <th:block sec:authorize="hasAnyRole('ROLE_USER','ROLE_TECNICO')">
          <!-- Portfolio Item 3 -->
         <div class="col-md-6 col-lg-4">
           <div class="portfolio-item mx-auto">
+          <span sec:authorize="hasRole('ROLE_USER')">
 			<a href="user/usuario-one.html" th:href="@{/user/incidencia/inventarioUsuario/{id}(id=${#authentication.name})}"/>
+			</span>
+          <span sec:authorize="hasRole('ROLE_TECNICO')">
+			<a href="tecnico/usuario-one.html" th:href="@{/tecnico/incidencia/inventarioUsuario/{id}(id=${#authentication.name})}"/>
+			</span>
             <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
               <div class="portfolio-item-caption-content text-center text-white">
                 <i class="fas fa-plus fa-3x"></i>
@@ -261,11 +296,29 @@
           </div>
         </div>
         </th:block>
+        
+        
+        <th:block sec:authorize="hasRole('ROLE_TECNICO')">
+         <!-- Portfolio Item 3 -->
+        <div class="col-md-6 col-lg-4">
+          <div class="portfolio-item mx-auto">
+            <a href="tecnico/list-incidencia.html" th:href="@{/tecnico/incidencia/incidenciaTecnico/{id}(id=${#authentication.name})}"/>
+            <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
+              <div class="portfolio-item-caption-content text-center text-white">
+                <i class="fas fa-plus fa-3x"></i>
+              </div>
+            </div></a>
+            <img class="img-fluid" src="img/portfolio/incidenciaT.png" alt="">
+          </div>
+        </div>
+        </th:block>
       <!-- /.row -->
 
     </div>
   </section>
 </th:block> 
+
+<th:block sec:authorize="isAuthenticated()">
   <!-- About Section -->
   <section class="page-section bg-primary text-white mb-0" id="about">
     <div class="container">
@@ -289,15 +342,16 @@
       </div>
     </div>
   </section>
-
+</th:block>
   <!-- Footer -->
     <!-- Copyright Section -->
-  <footer class="copyright py-4 text-center text-white">
+  <footer class="copyright py-4 text-center text-white" sec:authorize="isAuthenticated()">
     <div class="container">
       <small>Copyright &copy; Your Website 2020</small>
     </div>
   </footer>
 
+<body style="background-color:powderblue;">
 
 
 

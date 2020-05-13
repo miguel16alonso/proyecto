@@ -1,4 +1,4 @@
-package com.inotrs.proyecto.controladores;
+package com.inotrs.proyecto.controladores.user;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.inotrs.proyecto.modelo.Estado;
 import com.inotrs.proyecto.modelo.Incidencia;
+import com.inotrs.proyecto.modelo.Prioridad;
 import com.inotrs.proyecto.modelo.Tecnico;
 import com.inotrs.proyecto.modelo.Usuario;
 import com.inotrs.proyecto.servicios.IncidenciaService;
@@ -57,6 +58,14 @@ public class IncidenciaControllerUser {
 		incidencia.setFecha_Inicio(n);
 		incidencia.setFecha_Fin(f);
 		incidencia.setEstado(Estado.ABIERTA);
+		
+		if(incidencia.getPrioridad().equals(Prioridad.ALTA)) {
+			incidencia.setFecha_Fin(n.plusDays(1));
+		}else if(incidencia.getPrioridad().equals(Prioridad.MEDIA)) {
+			incidencia.setFecha_Fin(n.plusDays(3));
+		}else if(incidencia.getPrioridad().equals(Prioridad.BAJA)) {
+			incidencia.setFecha_Fin(n.plusDays(5));
+		}
 		
 		ArrayList<Tecnico> tecnicosEdificio=(ArrayList<Tecnico>) tecnicoService.findAllByEdificio(incidencia.getUsuario().getEdificio());
 		Tecnico tec=new Tecnico();

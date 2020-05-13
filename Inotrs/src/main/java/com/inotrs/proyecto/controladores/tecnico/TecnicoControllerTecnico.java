@@ -1,10 +1,9 @@
-package com.inotrs.proyecto.controladores;
+package com.inotrs.proyecto.controladores.tecnico;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,18 +15,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.inotrs.proyecto.modelo.Incidencia;
 import com.inotrs.proyecto.modelo.Producto;
 import com.inotrs.proyecto.modelo.Tecnico;
-import com.inotrs.proyecto.modelo.Usuario;
 import com.inotrs.proyecto.servicios.EdificioService;
 import com.inotrs.proyecto.servicios.IncidenciaService;
 import com.inotrs.proyecto.servicios.ProductoService;
-import com.inotrs.proyecto.servicios.UsuarioService;
+import com.inotrs.proyecto.servicios.TecnicoService;
 
 @Controller
-@RequestMapping("/admin/usuario")
-public class UsuarioController {
+@RequestMapping("/tecnico/tecnico")
+public class TecnicoControllerTecnico {
 	
 	@Autowired
-	private UsuarioService usuarioService;
+	private TecnicoService tecnicoService;
 	
 	@Autowired
 	private EdificioService edificioService;
@@ -38,16 +36,17 @@ public class UsuarioController {
 	@Autowired
 	private IncidenciaService incidenciaService;
 	
+	
 	@GetMapping("/")
 	public String index(Model model, @RequestParam(name="q", required=false) String query) {
-		List<Usuario> resultado = (query == null) ? usuarioService.findAll() : usuarioService.buscador(query);
-		model.addAttribute("usuarios", resultado);
-		return "admin/list-usuario";
+		List<Tecnico> resultado = (query == null) ? tecnicoService.findAll() : tecnicoService.buscador(query);
+		model.addAttribute("tecnicos", resultado);
+		return "tecnico/list-tecnico";
 	}
-
+	
 	@GetMapping("/nuevo")
-	public String nuevaUsuario(Model model) {
-		model.addAttribute("usuario", new Usuario());
+	public String nuevaTecnico(Model model) {
+		model.addAttribute("tecnico", new Tecnico());
 		model.addAttribute("edificios", edificioService.findAll());
 		
 		ArrayList<Producto> productos=(ArrayList<Producto>) productoService.findAll();
@@ -58,28 +57,28 @@ public class UsuarioController {
 				productosStock.add(producto);
 		
 		model.addAttribute("productos", productosStock);
-		return "admin/form-usuario";
+		return "tecnico/form-tecnico";
 	}
 
 	@PostMapping("/nuevo/submit")
-	public String submitNuevoUsuario(Usuario usuario, Model model) {
+	public String submitNuevoTecnico(Tecnico tecnico, Model model) {
 		
-		Producto p=usuario.getProducto();
+		Producto p=tecnico.getProducto();
 		p.setStock(p.getStock()-1);
-		usuario.setProducto(p);
+		tecnico.setProducto(p);
 		
-		usuarioService.save(usuario);
-		return "redirect:/admin/usuario/";
+		tecnicoService.save(tecnico);
+		return "redirect:/tecnico/tecnico/";
 
 	}
 	
 	@GetMapping("/editar/{login}")
-	public String editarUsuario(@PathVariable("login") String login, Model model) {
+	public String editarTecnico(@PathVariable("login") String login, Model model) {
 
-		Usuario usuario = usuarioService.findById(login);
+		Tecnico tecnico = tecnicoService.findById(login);
 
-		if (usuario != null) {
-			model.addAttribute("usuario", usuario);
+		if (tecnico != null) {
+			model.addAttribute("tecnico", tecnico);
 			model.addAttribute("edificios", edificioService.findAll());
 			
 			ArrayList<Producto> productos=(ArrayList<Producto>) productoService.findAll();
@@ -90,43 +89,25 @@ public class UsuarioController {
 					productosStock.add(producto);
 			
 			model.addAttribute("productos", productosStock);
-			return "admin/form-usuario";
+			return "tecnico/form-tecnico";
 		} else {
-			return "redirect:/admin/usuario/";
+			return "redirect:/tecnico/tecnico/";
 		}
 	}
 	
-	
-	@GetMapping("/borrar/{login}")
-	public String borrarUsuario(@PathVariable("login") String login, Model model) {
-
-		Usuario usuario = usuarioService.findById(login);
-
-		if (usuario != null) {
-			Producto p=usuario.getProducto();
-			p.setStock(p.getStock()+1);
-			usuario.setProducto(p);
-			usuarioService.delete(usuario);
-		}
-
-		return "redirect:/admin/usuario/";
-
-	}
-	
-	@GetMapping("/usuario/{login}")
+	@GetMapping("/tecnico/{login}")
 	public String showDetails(@PathVariable("login") String login, Model model) {
-		Usuario p = usuarioService.findById(login);
+		Tecnico p = tecnicoService.findById(login);
 		ArrayList<Incidencia> incidencias = new ArrayList<Incidencia>();
-		incidencias=(ArrayList<Incidencia>) incidenciaService.findAllByUsuario(login);
+		incidencias=(ArrayList<Incidencia>) incidenciaService.findAllByTecnico(login);
 		if (p != null) {
-			model.addAttribute("usuario", p);
+			model.addAttribute("tecnico", p);
 			model.addAttribute("incidencias", incidencias);
-			return "admin/one-usuario";
+			return "tecnico/one-tecnico";
 		}
 		
 		return "redirect:/";
 		
 	}
-
 
 }

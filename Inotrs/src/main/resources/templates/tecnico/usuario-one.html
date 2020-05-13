@@ -48,8 +48,10 @@ body {
 					class="btn btn-primary">Retroceder</a>
 				</div>
 			</div>
+
 		</div>
 	</nav>
+
 </head>
 <body>
 	
@@ -61,18 +63,22 @@ body {
 				<table class="table">
 					<thead>
 						<tr>
-							<th>Numero de ticket</th>
-							<th>Descripcion</th>
-							<th>Fecha Creacion</th>
-							<th>Fecha Cierre</th>
+							<th>Login</th>
+							<th>Nombre</th>
+							<th>Apellidos</th>
+							<th>Telefono</th>
+							<th>Nivel</th>
+							<th>Incidencias</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr>
-							<td th:text=${incidencia.id}></td>
-							<td th:text="${incidencia.descripcion}"></td>
-							<td th:text="${incidencia.fecha_Inicio}"></td>
-							<td th:text="${incidencia.fecha_Fin}"></td>
+							<td th:text=${tecnico.login}></td>
+							<td th:text="${tecnico.nombre}"></td>
+							<td th:text="${tecnico.apellidos}"></td>
+							<td th:text="${tecnico.telefono}"></td>
+							<td th:text="${tecnico.nivel}"></td>
+							<td th:text="${tecnico.incidencias}"></td>
 						</tr>
 					</tbody>
 				</table>
@@ -84,63 +90,52 @@ body {
 			<div class="col-md-1 col-xs-12">
 			</div>
 		<div class="col-md-4 col-xs-12">
-				<h2>Usuario</h2>
+				<h2>Edificio</h2>
 	
 				<table class="table">
 					<thead>
 						<tr>
-							<th>Login</th>
 							<th>Nombre</th>
-							<th>Apellidos</th>
-							<th>Telefono</th>
-							<th>Despacho</th>
-							<th>Edificio</th>
+							<th>Ubicacion</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr>
-							<td th:text="${incidencia.usuario.login}"></td>
-							<td th:text="${incidencia.usuario.nombre}"></td>
-							<td th:text="${incidencia.usuario.apellidos}"></td>
-							<td th:text="${incidencia.usuario.telefono}"></td>
-							<td th:text="${incidencia.usuario.despacho}"></td>
-							<td th:text="${incidencia.usuario.edificio.nombre}"></td>
+							<td th:text="${tecnico.edificio.nombre}"></td>
+							<td th:text="${tecnico.edificio.ubicacion}"></td>
 						</tr>
 					</tbody>
 				</table>
 		</div>
+		
 			<div class="col-md-1 col-xs-12">
 			</div>
 		<div class="col-md-4 col-xs-12">
-			<h2>Tecnico</h2>
+			<h2>Producto</h2>
 				<table class="table">
 					<thead>
 						<tr>
-							<th>Login</th>
-							<th>Nombre</th>
-							<th>Apellidos</th>
-							<th>Telefono</th>
-							<th>Edificio</th>
+							<th>Categoria</th>
+							<th>Marca</th>
+							<th>Modelo</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr>
-							<td th:text="${incidencia.tecnico.login}"></td>
-							<td th:text="${incidencia.tecnico.nombre}"></td>
-							<td th:text="${incidencia.tecnico.apellidos}"></td>
-							<td th:text="${incidencia.tecnico.telefono}"></td>
-							<td th:text="${incidencia.tecnico.edificio.nombre}"></td>
+							<td th:text="${tecnico.producto.categoria.nombre}"></td>
+							<td th:text="${tecnico.producto.marca}"></td>
+							<td th:text="${tecnico.producto.modelo}"></td>
 						</tr>
 					</tbody>
 				</table>
 		</div>
-	</div>
 	
+
 	</th:block>
 	
 
 				
-	<div class="modal fade" id="retroceder-modal" tabindex="-1" role="dialog">
+		<div class="modal fade" id="retroceder-modal" tabindex="-1" role="dialog">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">

@@ -43,13 +43,24 @@ body {
 				<a class="navbar-brand" href="/">Inotrs</a>
 			</div>
 			<div id="navbar" class="navbar-collapse collapse">
-				<div class="pull-right">
-					<a data-toggle="modal"  data-target="#retroceder-modal"
-					class="btn btn-primary">Retroceder</a>
-				</div>
+				<ul class="nav navbar-nav navbar-right">
+					<li class="dropdown"><a href="#" class="dropdown-toggle"
+						data-toggle="dropdown" role="button" aria-haspopup="true"
+						aria-expanded="false">Opciones <span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="/admin/categoria/"
+								th:href="@{/admin/categoria/}">Gestión de categorías</a></li>
+							<li><a href="/admin/producto/" th:href="@{/admin/producto/}">Gestión
+									de productos</a></li>
+							<li><a href="/admin/edificio/" th:href="@{/admin/edificio/}">Gestión
+									de edificios</a></li>
+						</ul></li>
+				</ul>
 			</div>
+
 		</div>
 	</nav>
+
 </head>
 <body>
 	
@@ -61,18 +72,16 @@ body {
 				<table class="table">
 					<thead>
 						<tr>
-							<th>Numero de ticket</th>
-							<th>Descripcion</th>
-							<th>Fecha Creacion</th>
-							<th>Fecha Cierre</th>
+							<th>Id</th>
+							<th>Marca</th>
+							<th>Modelo</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr>
-							<td th:text=${incidencia.id}></td>
-							<td th:text="${incidencia.descripcion}"></td>
-							<td th:text="${incidencia.fecha_Inicio}"></td>
-							<td th:text="${incidencia.fecha_Fin}"></td>
+							<td th:text="${producto.id}"></td>
+							<td th:text="${producto.marca}"></td>
+							<td th:text="${producto.modelo}"></td>
 						</tr>
 					</tbody>
 				</table>
@@ -80,11 +89,11 @@ body {
 		</div>
 	</div>
 	
-		<div class="row">
+	<div class="row">
 			<div class="col-md-1 col-xs-12">
 			</div>
 		<div class="col-md-4 col-xs-12">
-				<h2>Usuario</h2>
+				<h2>Asignado a Usuarios</h2>
 	
 				<table class="table">
 					<thead>
@@ -94,17 +103,17 @@ body {
 							<th>Apellidos</th>
 							<th>Telefono</th>
 							<th>Despacho</th>
-							<th>Edificio</th>
+							<th>Puesto</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<td th:text="${incidencia.usuario.login}"></td>
-							<td th:text="${incidencia.usuario.nombre}"></td>
-							<td th:text="${incidencia.usuario.apellidos}"></td>
-							<td th:text="${incidencia.usuario.telefono}"></td>
-							<td th:text="${incidencia.usuario.despacho}"></td>
-							<td th:text="${incidencia.usuario.edificio.nombre}"></td>
+						<tr th:each="usuario : ${usuarios}">
+							<td th:text="${usuario.login}"></td>
+							<td th:text="${usuario.nombre}"></td>
+							<td th:text="${usuario.apellidos}"></td>
+							<td th:text="${usuario.telefono}"></td>
+							<td th:text="${usuario.despacho}"></td>
+							<td th:text="${usuario.puesto}"></td>
 						</tr>
 					</tbody>
 				</table>
@@ -112,7 +121,7 @@ body {
 			<div class="col-md-1 col-xs-12">
 			</div>
 		<div class="col-md-4 col-xs-12">
-			<h2>Tecnico</h2>
+			<h2>Asignado a tecnicos</h2>
 				<table class="table">
 					<thead>
 						<tr>
@@ -120,16 +129,14 @@ body {
 							<th>Nombre</th>
 							<th>Apellidos</th>
 							<th>Telefono</th>
-							<th>Edificio</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<td th:text="${incidencia.tecnico.login}"></td>
-							<td th:text="${incidencia.tecnico.nombre}"></td>
-							<td th:text="${incidencia.tecnico.apellidos}"></td>
-							<td th:text="${incidencia.tecnico.telefono}"></td>
-							<td th:text="${incidencia.tecnico.edificio.nombre}"></td>
+						<tr th:each="tecnico : ${tecnicos}">
+							<td th:text="${tecnico.login}"></td>
+							<td th:text="${tecnico.nombre}"></td>
+							<td th:text="${tecnico.apellidos}"></td>
+							<td th:text="${tecnico.telefono}"></td>
 						</tr>
 					</tbody>
 				</table>
@@ -139,26 +146,6 @@ body {
 	</th:block>
 	
 
-				
-	<div class="modal fade" id="retroceder-modal" tabindex="-1" role="dialog">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-					<h4 class="modal-title">Página principal</h4>
-				</div>
-				<div class="modal-body">
-					<p>¿Está usted seguro de volver a la página principal?</p>
-					<button type="button" class="btn btn-default" data-dismiss="modal">No</button>
-					<a  href="/" class="btn btn-danger">Sí</a>
-				</div>
-			</div>
-
-		</div>
-	</div>
 	
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"

@@ -13,6 +13,8 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.IndexColumn;
 
@@ -36,11 +38,16 @@ public class Persona {
 	@Id
 	@EqualsAndHashCode.Include
 	private String login;
+	@NotEmpty
 	private String nombre;
+	@NotEmpty
 	private String apellidos;
+	@NotEmpty
 	private String telefono;
+	@NotNull
 	@ManyToOne
 	private Edificio edificio;
+	@NotNull
 	@ManyToOne
 	private Producto producto;
 

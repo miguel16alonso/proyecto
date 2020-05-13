@@ -21,4 +21,5 @@ public interface IUsuarioService {
 	public List<Usuario> findAllByProducto(String productoId);
 	public List<Usuario> buscador(String cadena);
 	public Page<Usuario> findAllPaginated(Pageable pageable);
+	public int numeroUsuarioProducto(Producto producto);
 }

@@ -1,4 +1,4 @@
-package com.inotrs.proyecto.controladores;
+package com.inotrs.proyecto.controladores.admin;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.inotrs.proyecto.modelo.Incidencia;
+import com.inotrs.proyecto.modelo.Prioridad;
 import com.inotrs.proyecto.modelo.Producto;
 import com.inotrs.proyecto.modelo.Tecnico;
 import com.inotrs.proyecto.modelo.Usuario;
@@ -68,12 +69,24 @@ public class IncidenciaController {
 
 	@PostMapping("/nueva/submit")
 	public String submitNuevoIncidencia(Incidencia incidencia, Model model) {
+		
 		String id="";
 		LocalDate n =LocalDate.now();
 		int numero = (int) (Math.random() * 10000);
 		id=id+numero+n.getYear()+n.getMonthValue()+n.getDayOfMonth();
 		incidencia.setId(id);
 		incidencia.setFecha_Inicio(n);
+		
+		//Fecha resolucion si es alta-1dias media-3dias baja-5dias
+		
+		
+		if(incidencia.getPrioridad().equals(Prioridad.ALTA)) {
+			incidencia.setFecha_Fin(n.plusDays(1));
+		}else if(incidencia.getPrioridad().equals(Prioridad.MEDIA)) {
+			incidencia.setFecha_Fin(n.plusDays(3));
+		}else if(incidencia.getPrioridad().equals(Prioridad.BAJA)) {
+			incidencia.setFecha_Fin(n.plusDays(5));
+		}
 		
 		ArrayList<Tecnico> tecnicosEdificio=(ArrayList<Tecnico>) tecnicoService.findAllByEdificio(incidencia.getUsuario().getEdificio());
 		Tecnico tec=new Tecnico();

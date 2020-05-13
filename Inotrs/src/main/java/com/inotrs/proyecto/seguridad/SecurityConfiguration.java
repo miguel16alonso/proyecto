@@ -31,6 +31,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		.withUser("malonso")
 		.password("{noop}malonso")
 		.roles("USER");
+		
+		auth
+		.inMemoryAuthentication()
+		.withUser("bmiguel")
+		.password("{noop}bmiguel")
+		.roles("TECNICO");
 	}
 
 	@Override
@@ -39,6 +45,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 			.authorizeRequests()
 			.antMatchers("/admin/**").hasRole("ADMIN")
 			.antMatchers("/user/**").hasRole("USER")
+			.antMatchers("/tecnico/**").hasRole("TECNICO")
 			.anyRequest().permitAll()
 			.and()
 			.formLogin()

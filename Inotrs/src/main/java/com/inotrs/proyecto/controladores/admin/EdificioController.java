@@ -1,4 +1,4 @@
-package com.inotrs.proyecto.controladores;
+package com.inotrs.proyecto.controladores.admin;
 
 import java.util.List;
 import java.util.Optional;
@@ -23,6 +23,7 @@ import com.inotrs.proyecto.modelo.Tecnico;
 import com.inotrs.proyecto.servicios.EdificioService;
 import com.inotrs.proyecto.servicios.ProductoService;
 import com.inotrs.proyecto.servicios.TecnicoService;
+import com.inotrs.proyecto.servicios.UsuarioService;
 
 @Controller
 @RequestMapping("/admin/edificio")
@@ -31,6 +32,8 @@ public class EdificioController {
 	@Autowired EdificioService edificioService;
 	@Autowired ProductoService productoService;
 	@Autowired TecnicoService tecnicoService;
+	@Autowired UsuarioService usuarioService;
+	
 	/*	
 	@GetMapping("/")
 	public String index(Model model) {
@@ -90,7 +93,8 @@ public class EdificioController {
 		
 		if (edificio != null) {
 			
-			if (productoService.numeroProductosEdificio(edificio) == 0) {
+			if (productoService.numeroProductosEdificio(edificio) == 0&
+					usuarioService.numeroUsuariosEdificio(edificio)==0&tecnicoService.numeroTecnicosEdificio(edificio)==0) {
 				edificioService.delete(edificio);				
 			} else {
 				return "redirect:/admin/edificio/?error=true";

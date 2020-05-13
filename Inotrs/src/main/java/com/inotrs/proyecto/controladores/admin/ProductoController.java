@@ -1,4 +1,4 @@
-package com.inotrs.proyecto.controladores;
+package com.inotrs.proyecto.controladores.admin;
 
 
 
@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.inotrs.proyecto.modelo.Categoria;
 import com.inotrs.proyecto.modelo.Producto;
 import com.inotrs.proyecto.modelo.Usuario;
 import com.inotrs.proyecto.servicios.CategoriaService;
@@ -98,12 +99,16 @@ public class ProductoController {
 		Producto producto = productoService.findById(id);
 
 		if (producto != null) {
-			productoService.delete(producto);
+			
+			if(tecnicoService.numeroTecnicoProducto(producto)==0&usuarioService.numeroUsuarioProducto(producto)==0) {
+				productoService.delete(producto);
+			}else {
+				return "redirect:/admin/producto/";
+			}				
 		}
-
 		return "redirect:/admin/producto/";
-
 	}
+	
 	
 	@GetMapping("/product/{id}")
 	public String showDetails(@PathVariable("id") String id, Model model) {

@@ -2,6 +2,7 @@ package com.inotrs.proyecto.modelo;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.validation.constraints.NotEmpty;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,6 +21,7 @@ import lombok.experimental.SuperBuilder;
 @DiscriminatorValue("TECNICO")
 public class Tecnico extends Persona {
 	
+	@NotEmpty
 	private String nivel;
 	private int incidencias;
 	

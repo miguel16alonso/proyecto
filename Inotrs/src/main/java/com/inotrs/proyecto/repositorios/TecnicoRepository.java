@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 import com.inotrs.proyecto.modelo.Edificio;
+import com.inotrs.proyecto.modelo.Producto;
 import com.inotrs.proyecto.modelo.Tecnico;
 import com.inotrs.proyecto.modelo.Usuario;
 
@@ -24,6 +25,7 @@ public interface TecnicoRepository extends CrudRepository<Tecnico, String>{
 	
 	List<Tecnico> findByNombreContainsIgnoreCaseOrApellidosContainsIgnoreCaseOrTelefonoContainsIgnoreCase(String nombre, String apellidos, String telefono);
 
-	
+	@Query("select count(p) from Tecnico p where p.producto = ?1")
+	public int findNumTecnicoByProducto(Producto producto);
 	
 }

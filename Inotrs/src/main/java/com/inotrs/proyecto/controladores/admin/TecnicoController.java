@@ -1,4 +1,4 @@
-package com.inotrs.proyecto.controladores;
+package com.inotrs.proyecto.controladores.admin;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -65,4 +65,9 @@ public class UsuarioService implements IUsuarioService {
 	public List<Usuario> buscador(String cadena) {
 		 return usuarioRepositorio.findByNombreContainsIgnoreCaseOrApellidosContainsIgnoreCaseOrTelefonoContainsIgnoreCase(cadena, cadena, cadena);
 	}
+
+	@Override
+	public int numeroUsuarioProducto(Producto producto) {
+		return usuarioRepositorio.findNumUsuarioByProducto(producto);
+	}
 }
